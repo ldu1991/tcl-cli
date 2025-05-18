@@ -1,0 +1,35 @@
+@use '../../scss/variables' as *;
+
+.wp-block-acf-spacer {
+  width: 100% !important;
+  max-width: none !important;
+
+  + h1,
+  + .h1,
+  + h2,
+  + .h2,
+  + h3,
+  + .h3,
+  + h4,
+  + .h4,
+  + h5,
+  + .h5,
+  + h6,
+  + .h6 {
+    padding-top: 0 !important;
+  }
+}
+
+.wp-custom-spacer {
+  width: 100%;
+  margin-block-start: 0 !important;
+
+  + * {
+    position: relative;
+    z-index: 11;
+  }
+
+  &_is-preview {
+    background: repeating-linear-gradient(-45deg, #e5e5e5, #e5e5e5 15px, #fff 0, #fff 30px);
+  }
+}
