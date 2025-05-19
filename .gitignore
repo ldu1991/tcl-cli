@@ -1,10 +1,12 @@
 *
 
 !tcl-cli/
+!tcl-cli-bundler/
 !dev-wp-gutenberg/
 !dev-wp-flexible/
 
 !tcl-cli/**/*
+!tcl-cli-bundler/**/*
 !dev-wp-gutenberg/**/*
 !dev-wp-flexible/**/*
 
@@ -12,6 +14,8 @@
 
 tcl-cli/node_modules/
 tcl-cli/package-lock.json
+tcl-cli-bundler/node_modules/
+tcl-cli-bundler/package-lock.json
 
 dev-wp-gutenberg/node_modules/
 dev-wp-gutenberg/package-lock.json

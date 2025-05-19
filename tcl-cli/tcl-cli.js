@@ -11,10 +11,10 @@ import inquirer from 'inquirer';
 import path from 'path';
 import fs from 'fs';
 
-import {getQuestions} from './questions.js';
-import {downloadAndExtractWordPress} from './download-wordpress.js';
-import {downloadTheCookieLabs} from './download-thecookielabs.js';
-import {createWpConfig} from './create-wp-config.js';
+import {getQuestions} from './bin/questions.js';
+import {downloadAndExtractWordPress} from './bin/download-wordpress.js';
+import {downloadTheCookieLabs} from './bin/download-thecookielabs.js';
+import {createWpConfig} from './bin/create-wp-config.js';
 
 
 const runCLI = async () => {

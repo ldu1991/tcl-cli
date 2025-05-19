@@ -5,7 +5,13 @@
   "bin": {
     "tcl": "./tcl-cli.js"
   },
+  "scripts": {
+    "zip:gutenberg": "node zip-gutenberg.js",
+    "zip:flexible": "node zip-flexible.js",
+    "zip": "npm run zip:gutenberg && npm run zip:flexible"
+  },
   "dependencies": {
+    "archiver": "^7.0.1",
     "boxen": "^8.0.1",
     "chalk": "^5.4.1",
     "cli-progress": "^3.12.0",

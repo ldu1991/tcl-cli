@@ -7,8 +7,6 @@
   "scripts": {
     "dev": "concurrently \"gulp\" \"webpack --mode development --watch\"",
     "release": "concurrently \"gulp release\" \"webpack --mode production\"",
-    "eslint": "npx eslint js blocks",
-    "format": "prettier --write src/**/*.{js,ts,jsx,tsx,json,vue,scss}",
     "check-updates": "ncu",
     "upgrade-deps": "ncu -u && npm install"
   },
@@ -35,15 +33,12 @@
   "devDependencies": {
     "@babel/core": "^7.27.1",
     "@babel/preset-env": "^7.27.2",
-    "@eslint/js": "^9.27.0",
     "babel-loader": "^10.0.0",
     "browser-sync": "^3.0.4",
     "chalk": "^5.4.1",
     "clean-webpack-plugin": "^4.0.0",
     "concurrently": "^9.1.2",
     "copy-webpack-plugin": "^13.0.0",
-    "eslint": "^9.27.0",
-    "eslint-webpack-plugin": "^5.0.1",
     "fs": "^0.0.1-security",
     "glob": "^11.0.2",
     "globals": "^16.1.0",
@@ -63,23 +58,17 @@
     "imagemin-svgo": "^11.0.1",
     "merge2": "^1.4.1",
     "npm-check-updates": "^18.0.1",
-    "prettier": "^3.5.3",
     "sass": "^1.89.0",
     "terser-webpack-plugin": "^5.3.14",
     "webpack": "^5.99.8",
     "webpack-cli": "^6.0.1"
   },
   "dependencies": {
-    "@fancyapps/fancybox": "latest",
+    "@fancyapps/ui": "^5.0.36",
     "gsap": "^3.13.0",
-    "lazysizes": "latest",
-    "lottie-web": "latest",
-    "mq-breakpoints": "latest",
-    "remodal": "latest",
-    "select2": "latest",
-    "sharer.js": "latest",
-    "sp-form-data": "latest",
-    "swiper": "latest",
-    "trim-words": "latest"
+    "lottie-web": "^5.12.2",
+    "select2": "^4.1.0-rc.0",
+    "sp-form-data": "^5.2.1",
+    "swiper": "^11.2.6"
   }
 }
