@@ -10,6 +10,14 @@ import boxen from 'boxen';
 import inquirer from 'inquirer';
 import path from 'path';
 import fs from 'fs';
+import {fileURLToPath} from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname  = path.dirname(__filename);
+
+// Project config
+const packageJSON = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'package.json')).toString());
+
 
 import {getQuestions} from './bin/questions.js';
 import {downloadAndExtractWordPress} from './bin/download-wordpress.js';
@@ -28,7 +36,7 @@ const runCLI = async () => {
     borderStyle:    'double',
     borderColor:    'cyan',
     align:          'center',
-    title:          'TCL CLI',
+    title:          `TCL CLI v.${packageJSON.version}`,
     titleAlignment: 'center',
   }));
 
