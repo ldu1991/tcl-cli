@@ -1,6 +1,6 @@
 {
   "name": "tcl",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "type": "module",
   "bin": {
     "tcl": "./tcl-cli.js"
@@ -8,7 +8,8 @@
   "scripts": {
     "zip:gutenberg": "node zip-gutenberg.js",
     "zip:flexible": "node zip-flexible.js",
-    "zip": "npm run zip:gutenberg && npm run zip:flexible"
+    "zip": "npm run zip:gutenberg && npm run zip:flexible",
+    "check:publish": "npm pack --dry-run"
   },
   "dependencies": {
     "archiver": "^7.0.1",

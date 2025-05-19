@@ -1,0 +1,12 @@
+*~
+*.iws
+*.log
+.idea
+.htaccess
+.DS_Store
+out
+gen
+node_modules
+package-lock.json
+zip-flexible.js
+zip-gutenberg.js
