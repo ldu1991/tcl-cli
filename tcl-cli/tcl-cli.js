@@ -15,6 +15,9 @@ import {getQuestions} from './bin/questions.js';
 import {downloadAndExtractWordPress} from './bin/download-wordpress.js';
 import {downloadTheCookieLabs} from './bin/download-thecookielabs.js';
 import {createWpConfig} from './bin/create-wp-config.js';
+import {unpackingDevWp} from "./bin/unpacking-dev-wp.js";
+import {createProjectConfig} from "./bin/create-project-config.js";
+import {createStyleCss} from "./bin/create-style-css.js";
 
 
 const runCLI = async () => {
@@ -41,7 +44,7 @@ const runCLI = async () => {
           dbHost,
         } = await inquirer.prompt(getQuestions());
 
-  let get_dbName     = installDefaultConfig ? projectName : dbName,
+  let get_dbName     = installDefaultConfig ? projectName.toLowerCase().replace(/[^a-z0-9]/gi, '-') : dbName,
       get_dbUser     = installDefaultConfig ? 'local' : dbUser,
       get_dbPassword = installDefaultConfig ? '' : dbPassword,
       get_dbHost     = installDefaultConfig ? 'localhost' : dbHost;
@@ -53,40 +56,45 @@ const runCLI = async () => {
   console.log(chalk.cyanBright(`DB_HOST:      ${get_dbHost}`));
 
 
-  const targetDir = path.resolve(projectName);
+  const targetDir = path.resolve(projectName.toLowerCase().replace(/[^a-z0-9]/gi, '-'));
 
-  // Создание директории проекта
   if (fs.existsSync(targetDir)) {
     console.error(chalk.red(`\n Directory "${projectName}" already exists.`));
     process.exit(1);
   }
 
   fs.mkdirSync(targetDir);
-  process.chdir(targetDir); // переходим в папку проекта
+  process.chdir(targetDir);
 
 
   try {
-    await downloadAndExtractWordPress();
-    await createWpConfig({
-      dbName:     get_dbName,
-      dbUser:     get_dbUser,
-      dbPassword: get_dbPassword,
-      dbHost:     get_dbHost,
-      projectName,
-    });
-    await downloadTheCookieLabs();
+    switch (template) {
+      case 'Flexible Content':
+        await unpackingDevWp('flexible');
+        break;
+      case 'Gutenberg blocks':
+        await unpackingDevWp('gutenberg');
+        break;
+    }
 
-
-    // Можно добавить установку шаблона сюда по выбору
     switch (template) {
       case 'Vue.js + WordPress':
         console.log('Setting up Vue.js + WordPress template...');
         break;
       case 'Flexible Content':
-        console.log('Setting up Flexible Content template...');
-        break;
       case 'Gutenberg blocks':
-        console.log('Setting up Gutenberg blocks template...');
+        await createProjectConfig(projectName);
+        await createStyleCss(projectName);
+
+        await downloadAndExtractWordPress();
+        await createWpConfig({
+          dbName:     get_dbName,
+          dbUser:     get_dbUser,
+          dbPassword: get_dbPassword,
+          dbHost:     get_dbHost,
+          projectName,
+        });
+        await downloadTheCookieLabs();
         break;
     }
 

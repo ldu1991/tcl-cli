@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import unzipper from 'unzipper';
+import unZipper from 'unzipper';
 import fs from 'fs';
 import path from 'path';
 import chalk from 'chalk';
@@ -35,12 +35,11 @@ export const downloadTheCookieLabs = async () => {
 
   const themePath = path.resolve('wp-content/themes/thecookielabs');
 
-  // Создаём папку, если не существует
   fs.mkdirSync(themePath, {recursive: true});
 
   console.log(chalk.cyan('Extracting theme...'));
   await fs.createReadStream(zipPath)
-    .pipe(unzipper.Extract({path: themePath}))
+    .pipe(unZipper.Extract({path: themePath}))
     .promise();
 
   fs.unlinkSync(zipPath);

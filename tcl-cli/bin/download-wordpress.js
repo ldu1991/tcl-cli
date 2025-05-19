@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import unzipper from 'unzipper';
+import unZipper from 'unzipper';
 import fs from 'fs';
 import path from 'path';
 import chalk from 'chalk';
@@ -25,7 +25,7 @@ export const downloadAndExtractWordPress = async () => {
   console.log(chalk.cyan('Download complete. Extracting...'));
 
   await fs.createReadStream(zipPath)
-    .pipe(unzipper.Extract({path: '.'}))
+    .pipe(unZipper.Extract({path: '.'}))
     .promise();
 
   const wordpressDir = path.join('.', 'wordpress');

@@ -1,9 +1,9 @@
 {
-  "name": "tcl",
+  "name": "tcl-theme",
   "version": "0.0.1",
   "type": "module",
   "bin": {
-    "tcl": "./tcl-cli.js"
+    "tcl-theme": "./tcl-cli.js"
   },
   "scripts": {
     "zip:gutenberg": "node zip-gutenberg.js",
