@@ -1,8 +1,8 @@
-import fetch from 'node-fetch';
 import unZipper from 'unzipper';
 import fs from 'fs';
 import path from 'path';
 import chalk from 'chalk';
+import {Readable} from "stream";
 
 export const downloadTheCookieLabs = async () => {
   const themeBaseUrl = 'https://tcl-theme.cookiefy.com/wp-content/themes';
@@ -27,10 +27,12 @@ export const downloadTheCookieLabs = async () => {
   const zipPath = path.resolve('theme.zip');
   const zipFile = fs.createWriteStream(zipPath);
 
+
   await new Promise((resolve, reject) => {
-    zipResponse.body.pipe(zipFile);
-    zipResponse.body.on('error', reject);
-    zipFile.on('finish', resolve);
+    Readable.fromWeb(zipResponse.body)
+      .pipe(zipFile)
+      .on('finish', resolve)
+      .on('error', reject);
   });
 
   const themePath = path.resolve('wp-content/themes/thecookielabs');

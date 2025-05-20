@@ -1,8 +1,8 @@
-import fetch from 'node-fetch';
 import unZipper from 'unzipper';
 import fs from 'fs';
 import path from 'path';
 import chalk from 'chalk';
+import {Readable} from "stream";
 
 export const downloadAndExtractWordPress = async () => {
   const zipUrl  = 'https://wordpress.org/latest.zip';
@@ -17,9 +17,10 @@ export const downloadAndExtractWordPress = async () => {
 
   const fileStream = fs.createWriteStream(zipPath);
   await new Promise((resolve, reject) => {
-    response.body.pipe(fileStream);
-    response.body.on('error', reject);
-    fileStream.on('finish', resolve);
+    Readable.fromWeb(response.body)
+      .pipe(fileStream)
+      .on('finish', resolve)
+      .on('error', reject);
   });
 
   console.log(chalk.cyan('Download complete. Extracting...'));
