@@ -40,8 +40,6 @@ const runCLI = async () => {
     titleAlignment: 'center',
   }));
 
-  //const currentDir = path.resolve('./');
-
   const {
           template,
           projectName,
