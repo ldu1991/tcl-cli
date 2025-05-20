@@ -87,7 +87,16 @@ const runCLI = async () => {
 
     switch (template) {
       case 'Vue.js + WordPress':
-        console.log('Setting up Vue.js + WordPress template...');
+        await downloadAndExtractWordPress('./backend');
+        await createWpConfig({
+          dbName:     get_dbName,
+          dbUser:     get_dbUser,
+          dbPassword: get_dbPassword,
+          dbHost:     get_dbHost,
+          projectName,
+          targetDir: './backend'
+        });
+
         break;
       case 'Flexible Content':
       case 'Gutenberg blocks':

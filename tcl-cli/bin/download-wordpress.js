@@ -4,9 +4,10 @@ import path from 'path';
 import chalk from 'chalk';
 import {Readable} from "stream";
 
-export const downloadAndExtractWordPress = async () => {
+export const downloadAndExtractWordPress = async (targetDir = '.') => {
   const zipUrl  = 'https://wordpress.org/latest.zip';
   const zipPath = path.resolve('wordpress.zip');
+  const extractPath = path.resolve(targetDir);
 
   console.log(chalk.cyan('Downloading WordPress...'));
 
@@ -26,16 +27,16 @@ export const downloadAndExtractWordPress = async () => {
   console.log(chalk.cyan('Download complete. Extracting...'));
 
   await fs.createReadStream(zipPath)
-    .pipe(unZipper.Extract({path: '.'}))
+    .pipe(unZipper.Extract({path: extractPath}))
     .promise();
 
-  const wordpressDir = path.join('.', 'wordpress');
+  const wordpressDir = path.join(extractPath, 'wordpress');
   if (fs.existsSync(wordpressDir)) {
     const files = fs.readdirSync(wordpressDir);
     for (const file of files) {
       fs.renameSync(
         path.join(wordpressDir, file),
-        path.join('.', file),
+        path.join(extractPath, file),
       );
     }
     fs.rmSync(wordpressDir, {recursive: true, force: true});
@@ -43,7 +44,6 @@ export const downloadAndExtractWordPress = async () => {
 
   fs.unlinkSync(zipPath);
 
-  // Удаление отдельных файлов и папок
   const toDelete = [
     'wp-config-sample.php',
     'wp-content/plugins/hello.php',
@@ -53,7 +53,7 @@ export const downloadAndExtractWordPress = async () => {
   ];
 
   for (const target of toDelete) {
-    const fullPath = path.resolve(target);
+    const fullPath = path.join(extractPath, target);
     if (fs.existsSync(fullPath)) {
       const stat = fs.statSync(fullPath);
       if (stat.isDirectory()) {

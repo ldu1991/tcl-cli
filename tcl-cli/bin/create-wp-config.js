@@ -5,8 +5,9 @@ import {randomBytes} from 'crypto';
 
 const generateSecretKey = () => randomBytes(48).toString('base64');
 
-export const createWpConfig = ({dbName, dbUser, dbPassword, dbHost, projectName}) => {
-  const configPath  = path.resolve('wp-config.php');
+export const createWpConfig = ({dbName, dbUser, dbPassword, dbHost, projectName, targetDir = '.'}) => {
+  const extractPath = path.resolve(targetDir);
+  const configPath  = path.join(extractPath, 'wp-config.php');
   const tablePrefix = projectName.toLowerCase().replace(/[^a-z0-9]/gi, '_') + '_';
 
   const configContent = `<?php
