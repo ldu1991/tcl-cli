@@ -10,45 +10,87 @@ export const getQuestions = () => [
     ],
   },
   {
-    type:     'input',
-    name:     'projectName',
-    message:  'Enter project name (required):',
-    validate: input => input.trim() ? true : 'Project name is required.',
+    type: 'input',
+    name: 'projectName',
+    message:  'Enter project name:',
+    validate: input => input.trim() ? true : 'Project name is required.'
   },
   {
-    type:    'confirm',
-    name:    'installDefaultConfig',
-    message: 'Install default WordPress configuration?',
-    default: true,
+    type: 'input',
+    name: 'targetDirectory',
+    message:  'Enter target directory:',
+    default: answers => answers.projectName.toLowerCase().replace(/[^a-z0-9]/gi, '-'),
+    //validate: input => input.trim() ? true : 'Target directory is required.'
   },
   {
     type:     'input',
     name:     'dbName',
     message:  'Enter database name:',
-    when:     answers => !answers.installDefaultConfig,
-    validate: input => input.trim() ? true : 'Database name is required.',
+    default: answers => answers.projectName.toLowerCase().replace(/[^a-z0-9]/gi, '-')
+    //validate: input => input.trim() ? true : 'Database name is required.',
   },
   {
     type:     'input',
     name:     'dbUser',
     message:  'Enter database user:',
-    when:     answers => !answers.installDefaultConfig,
-    validate: input => input.trim() ? true : 'Database user is required.',
+    default: 'local'
   },
   {
-    type:    'password',
-    name:    'dbPassword',
+    type:    'input',
+    name:    'dbPass',
     message: 'Enter database password:',
-    when:    answers => !answers.installDefaultConfig,
-    default: '',
-    mask:    '*',
+    default: ''
   },
   {
     type:    'input',
     name:    'dbHost',
     message: 'Enter database host:',
-    when:    answers => !answers.installDefaultConfig,
     default: 'localhost',
   },
+  {
+    type:    'input',
+    name:    'dbPrefix',
+    message: 'Enter database prefix:',
+    default: 'wp_',
+  },
+  {
+    type:    'input',
+    name:    'siteUrl',
+    message: `Enter site URL:`,
+    default: answers => `http://${answers.targetDirectory}`,
+  },
+  {
+    type:     'input',
+    name:     'siteTitle',
+    message:  'Enter site title:',
+    validate: input => input.trim() ? true : 'Site title is required.',
+  },
+  {
+    type:     'input',
+    name:     'adminUser',
+    message:  'Enter admin user:',
+    validate: input => input.trim() ? true : 'Admin user is required.',
+  },
+  {
+    type:     'input',
+    name:     'adminPass',
+    message:  'Enter admin password:',
+    validate: input => input.trim() ? true : 'Admin password is required.',
+  },
+  {
+    type:     'input',
+    name:     'adminEmail',
+    message:  'Enter admin email:',
+    validate: input => {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (input.trim() === '') {
+        return 'Admin email is required.';
+      }
+      if (!emailRegex.test(input)) {
+        return 'Please enter a valid email address.';
+      }
+      return true;
+    }
+  }
 ];
 

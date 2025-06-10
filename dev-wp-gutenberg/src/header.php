@@ -24,5 +24,3 @@ if (!defined('ABSPATH')) {
 
 
 <main class="main-wrapper">
-
-

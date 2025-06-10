@@ -20,12 +20,11 @@ const packageJSON = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'package.
 
 
 import {getQuestions} from './bin/questions.js';
-import {downloadAndExtractWordPress} from './bin/download-wordpress.js';
 import {downloadTheCookieLabs} from './bin/download-thecookielabs.js';
-import {createWpConfig} from './bin/create-wp-config.js';
 import {unpackingDevWp} from "./bin/unpacking-dev-wp.js";
 import {createProjectConfig} from "./bin/create-project-config.js";
 import {createStyleCss} from "./bin/create-style-css.js";
+import {installWordPress} from "./bin/wp-cli.js";
 
 
 const runCLI = async () => {
@@ -43,33 +42,46 @@ const runCLI = async () => {
   const {
           template,
           projectName,
-          installDefaultConfig,
+          targetDirectory,
           dbName,
           dbUser,
-          dbPassword,
+          dbPass,
           dbHost,
+          dbPrefix,
+          siteUrl,
+          siteTitle,
+          adminUser,
+          adminPass,
+          adminEmail
         } = await inquirer.prompt(getQuestions());
 
-  let get_dbName     = installDefaultConfig ? projectName.toLowerCase().replace(/[^a-z0-9]/gi, '-') : dbName,
-      get_dbUser     = installDefaultConfig ? 'local' : dbUser,
-      get_dbPassword = installDefaultConfig ? '' : dbPassword,
-      get_dbHost     = installDefaultConfig ? 'localhost' : dbHost;
 
-  console.log(chalk.white.cyanBright('DB config:'));
-  console.log(chalk.cyanBright(`DB_NAME:      ${get_dbName}`));
-  console.log(chalk.cyanBright(`DB_USER:      ${get_dbUser}`));
-  console.log(chalk.cyanBright(`DB_PASSWORD:  ${get_dbPassword ? '*'.repeat(get_dbPassword.length) : '\'\''}`));
-  console.log(chalk.cyanBright(`DB_HOST:      ${get_dbHost}`));
+  console.log(chalk.cyanBright(`
+---------- Database ----------
+DB_NAME:        ${dbName}
+DB_USER:        ${dbUser}
+DB_PASSWORD:    ${dbPass}
+DB_HOST:        ${dbHost}
+DB_PREFIX:      ${dbPrefix}
+
+--------- Site Admin ---------
+Site URL:       ${siteUrl}
+Site Title:     ${siteTitle}
+Admin User:     ${adminUser}
+Admin Password: ${adminPass}
+Admin Email:    ${adminEmail}
+  `));
 
 
-  const targetDir = path.resolve(projectName.toLowerCase().replace(/[^a-z0-9]/gi, '-'));
+  const targetDir = path.resolve(targetDirectory);
 
-  if (fs.existsSync(targetDir)) {
-    console.error(chalk.red(`\n Directory "${projectName}" already exists.`));
-    process.exit(1);
+  if (!fs.existsSync(targetDir)) {
+    fs.mkdirSync(targetDir, { recursive: true });
+    console.log(chalk.green(`\nDirectory "${targetDir}" created.`));
+  } else {
+    console.log(chalk.yellow(`\nDirectory "${targetDir}" already exists. Continuing...`));
   }
 
-  fs.mkdirSync(targetDir);
   process.chdir(targetDir);
 
 
@@ -85,31 +97,31 @@ const runCLI = async () => {
 
     switch (template) {
       case 'Vue.js + WordPress':
-        await downloadAndExtractWordPress('./backend');
-        await createWpConfig({
-          dbName:     get_dbName,
-          dbUser:     get_dbUser,
-          dbPassword: get_dbPassword,
-          dbHost:     get_dbHost,
-          projectName,
-          targetDir: './backend'
-        });
+        await installWordPress({
+          installPath: './backend',
+          dbName:      dbName,
+          dbUser:      dbUser,
+          dbPass:      dbPass,
+          dbHost:      dbHost,
+          dbPrefix:    dbPrefix,
+          siteUrl:     siteUrl,
+          siteTitle:   siteTitle,
+          adminUser:   adminUser,
+          adminPass:   adminPass,
+          adminEmail:  adminEmail
+        })
+
 
         break;
       case 'Flexible Content':
       case 'Gutenberg blocks':
-        await createProjectConfig(projectName);
+        await createProjectConfig(siteUrl, projectName);
         await createStyleCss(projectName);
 
-        await downloadAndExtractWordPress();
-        await createWpConfig({
-          dbName:     get_dbName,
-          dbUser:     get_dbUser,
-          dbPassword: get_dbPassword,
-          dbHost:     get_dbHost,
-          projectName,
-        });
+        //////
+
         await downloadTheCookieLabs();
+
         break;
     }
 

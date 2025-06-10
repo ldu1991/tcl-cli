@@ -68,4 +68,3 @@ include_once('inc/action-config.php');
 foreach (glob(get_stylesheet_directory() . '/inc/components/ui-*.php') as $component_file) {
   require_once $component_file;
 }
-

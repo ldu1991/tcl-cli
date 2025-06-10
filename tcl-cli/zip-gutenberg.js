@@ -15,7 +15,7 @@ const archive = archiver('zip', {
 });
 
 output.on('close', () => {
-  console.log(`Архив создан: ${outputZip} (${archive.pointer()} байт)`);
+  console.log(`Archive created: ${outputZip} (${archive.pointer()} byte)`);
 });
 
 archive.on('warning', err => {

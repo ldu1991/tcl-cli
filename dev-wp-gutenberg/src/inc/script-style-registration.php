@@ -11,13 +11,24 @@ function set_modules()
 
   if (!empty($style_library)) {
     foreach ($style_library as $handle => $src) {
-      wp_register_style($handle, $src, array(), wp_get_theme()->get('Version'));
+      wp_register_style(
+        $handle,
+        $src,
+        array(),
+        wp_get_theme()->get('Version')
+      );
     }
   }
 
   if (!empty($script_library)) {
     foreach ($script_library as $handle => $src) {
-      wp_register_script($handle, $src, array('jquery'), wp_get_theme()->get('Version'), true);
+      wp_register_script(
+        $handle,
+        $src,
+        array('jquery'),
+        wp_get_theme()->get('Version'),
+        array('in_footer' => true)
+      );
     }
   }
 
@@ -74,7 +85,7 @@ add_action('wp_enqueue_scripts', function () {
         $handle_base,
         $uri_base . 'style.css',
         $deps_style,
-        filemtime($style_file)
+        wp_get_theme()->get('Version')
       );
     }
 
@@ -85,8 +96,8 @@ add_action('wp_enqueue_scripts', function () {
         $handle_base,
         $uri_base . 'script.js',
         $deps_script,
-        filemtime($script_file),
-        true
+        wp_get_theme()->get('Version'),
+        array('in_footer' => true)
       );
     }
   }
@@ -105,7 +116,7 @@ add_action('wp_enqueue_scripts', function () {
     get_stylesheet_directory_uri() . '/assets/js/script.js',
     array('jquery'),
     wp_get_theme()->get('Version'),
-    true
+    array('in_footer' => true)
   );
 });
 
@@ -146,7 +157,7 @@ add_action('enqueue_block_editor_assets', function () {
         $uri_base . 'script.js',
         $deps_script,
         filemtime($editor_script),
-        true
+        array('in_footer' => true)
       );
     }
   }

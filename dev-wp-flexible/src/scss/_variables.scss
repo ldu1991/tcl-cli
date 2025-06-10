@@ -1,0 +1,9 @@
+@forward 'helpers/functions';
+@forward 'helpers/mixins';
+
+$content-size: var(--wp--style--global--content-size);
+$wide-size: var(--wp--style--global--wide-size);
+
+// Colors
+$white: var(--wp--preset--color--white); // #FFFFFF
+$black: var(--wp--preset--color--black); // #000000

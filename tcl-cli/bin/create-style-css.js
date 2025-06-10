@@ -4,7 +4,6 @@ import chalk from 'chalk';
 
 export const createStyleCss = (projectName) => {
   const configPath  = path.resolve('dev-wp/src/style.css');
-  //const name = projectName.toLowerCase().replace(/[^a-z0-9]/gi, '-');
 
   const configContent = `/*
 Theme Name: ${projectName}
@@ -14,6 +13,7 @@ Author URI: https://thecookielabs.com/
 Description:
 Requires at least: WordPress 5.7
 Template: thecookielabs
+Version: 1.0.0
 License:
 License URI:
 Text Domain: thecookielabs

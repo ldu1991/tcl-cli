@@ -1,0 +1,40 @@
+@use 'variables' as *;
+
+*,
+a,
+button:not(.hp-btn) {
+  &:focus {
+    outline: 1px solid #000;
+    outline-offset: 8px;
+  }
+
+  &:focus:not(:focus-visible) {
+    outline: 0;
+  }
+
+  &:focus-visible {
+    outline: 1px solid #000;
+    outline-offset: 8px;
+  }
+}
+
+.main-wrapper {
+  > *:not([class*='-section-element']) {
+    &:not(.alignwide):not(.alignfull) {
+      max-width: var(--wp--style--global--content-size);
+    }
+
+    &:not(.alignfull) {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    &.alignwide {
+      max-width: var(--wp--style--global--wide-size);
+    }
+
+    &.alignfull {
+      max-width: none;
+    }
+  }
+}
