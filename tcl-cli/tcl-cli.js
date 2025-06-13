@@ -20,11 +20,10 @@ const packageJSON = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'package.
 
 
 import {getQuestions} from './bin/questions.js';
-import {downloadTheCookieLabs} from './bin/download-thecookielabs.js';
 import {unpackingDevWp} from "./bin/unpacking-dev-wp.js";
 import {createProjectConfig} from "./bin/create-project-config.js";
-import {createStyleCss} from "./bin/create-style-css.js";
 import {installWordPress} from "./bin/wp-cli.js";
+import {createProjectInfo} from "./bin/create-project-info.js";
 
 
 const runCLI = async () => {
@@ -76,7 +75,7 @@ Admin Email:    ${adminEmail}
   const targetDir = path.resolve(targetDirectory);
 
   if (!fs.existsSync(targetDir)) {
-    fs.mkdirSync(targetDir, { recursive: true });
+    fs.mkdirSync(targetDir, {recursive: true});
     console.log(chalk.green(`\nDirectory "${targetDir}" created.`));
   } else {
     console.log(chalk.yellow(`\nDirectory "${targetDir}" already exists. Continuing...`));
@@ -86,6 +85,23 @@ Admin Email:    ${adminEmail}
 
 
   try {
+    await createProjectInfo(adminUser, adminPass, adminEmail, projectName)
+
+    await installWordPress({
+      installPath:     template === 'Vue.js + WordPress' ? './backend' : '.',
+      projectName:     projectName,
+      dbName:          dbName,
+      dbUser:          dbUser,
+      dbPass:          dbPass,
+      dbHost:          dbHost,
+      dbPrefix:        dbPrefix,
+      siteUrl:         siteUrl,
+      siteTitle:       siteTitle,
+      adminUser:       adminUser,
+      adminPass:       adminPass,
+      adminEmail:      adminEmail
+    })
+
     switch (template) {
       case 'Flexible Content':
         await unpackingDevWp('flexible');
@@ -97,31 +113,12 @@ Admin Email:    ${adminEmail}
 
     switch (template) {
       case 'Vue.js + WordPress':
-        await installWordPress({
-          installPath: './backend',
-          dbName:      dbName,
-          dbUser:      dbUser,
-          dbPass:      dbPass,
-          dbHost:      dbHost,
-          dbPrefix:    dbPrefix,
-          siteUrl:     siteUrl,
-          siteTitle:   siteTitle,
-          adminUser:   adminUser,
-          adminPass:   adminPass,
-          adminEmail:  adminEmail
-        })
-
+        //////////
 
         break;
       case 'Flexible Content':
       case 'Gutenberg blocks':
-        await createProjectConfig(siteUrl, projectName);
-        await createStyleCss(projectName);
-
-        //////
-
-        await downloadTheCookieLabs();
-
+        await createProjectConfig(siteUrl.replace(/^https?:\/\/(www\.)?/, ''), projectName);
         break;
     }
 

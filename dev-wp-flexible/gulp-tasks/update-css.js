@@ -9,7 +9,7 @@ const projectConfig = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../pro
 export async function updateCss() {
   const configPath  = path.resolve(projectConfig.themePath, 'style.css');
 
-  const configContent = `/*
+  const style = `/*
 Theme Name: ${projectConfig.themeName}
 Theme URI: https://thecookielabs.com/
 Author: The Cookie Labs
@@ -24,5 +24,5 @@ Text Domain: thecookielabs
 Tags: one-column, flexible-header, accessibility-ready, custom-colors, custom-menu, custom-logo, editor-style, featured-images, footer-widgets, rtl-language-support, sticky-post, threaded-comments, translation-ready
 */`;
 
-  fs.writeFileSync(configPath, configContent);
+  fs.writeFileSync(configPath, style);
 }

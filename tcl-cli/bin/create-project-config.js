@@ -7,8 +7,8 @@ export const createProjectConfig = (proxy, projectName) => {
   const name = projectName.toLowerCase().replace(/[^a-z0-9]/gi, '-');
 
   const configContent = `{
-  "themeName": "${projectName}"
-  "proxy": "${name}",
+  "themeName": "${projectName}",
+  "proxy": "${proxy}",
   "themePath": "../wp-content/themes/${name}"
 }`;
 
