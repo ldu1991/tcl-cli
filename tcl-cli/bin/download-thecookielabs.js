@@ -19,7 +19,7 @@ export const downloadTheCookieLabs = async () => {
   const version = match[1].trim();
   const zipUrl  = `${themeBaseUrl}/thecookielabs-${version}.zip`;
 
-  console.log(chalk.cyan('Downloading TheCookieLabs theme zip...'));
+  console.log(chalk.green('Downloading TheCookieLabs theme zip...'));
 
   const zipResponse = await fetch(zipUrl);
   if (!zipResponse.ok) throw new Error('Failed to download theme zip');
@@ -39,12 +39,9 @@ export const downloadTheCookieLabs = async () => {
 
   fs.mkdirSync(themePath, {recursive: true});
 
-  console.log(chalk.cyan('Extracting theme...'));
   await fs.createReadStream(zipPath)
     .pipe(unZipper.Extract({path: themePath}))
     .promise();
 
   fs.unlinkSync(zipPath);
-
-  console.log(chalk.green('TheCookieLabs Theme installed successfully!'));
 };

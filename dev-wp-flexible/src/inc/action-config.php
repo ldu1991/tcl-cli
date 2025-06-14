@@ -11,7 +11,7 @@ add_action('after_setup_theme', 'add_theme_supports');
 
 /* Filter */
 //add_filter('acf/settings/show_admin', '__return_false'); // Hide ACF field group menu item
-add_filter('use_block_editor_for_post', '__return_false', 5);
+add_filter('use_block_editor_for_post', '__return_false');
 add_filter('big_image_size_threshold', '__return_false');
 //add_filter('woocommerce_enqueue_styles', '__return_empty_array');
 

@@ -34,9 +34,9 @@ export const installWordPress = async (options) => {
 
   const wpCliPath = path.join(extractPath, 'wp-cli.phar');
 
-  // Step 1: Download wp-cli.phar if it doesn't exist
+  // Download wp-cli.phar if it doesn't exist
   if (!fs.existsSync(wpCliPath)) {
-    console.log(chalk.green(`\nDownloading wp-cli.phar`));
+    console.log(chalk.green(`Downloading wp-cli.phar`));
     await new Promise((resolve, reject) => {
       const file = fs.createWriteStream(wpCliPath);
       https.get(
@@ -57,10 +57,10 @@ export const installWordPress = async (options) => {
     try {
       fs.chmodSync(wpCliPath, 0o755);
     } catch (chmodErr) {
-      console.log(chalk.red(`\nFailed to set permissions on wp-cli.phar: ${chmodErr}`));
+      console.log(chalk.red(`Failed to set permissions on wp-cli.phar: ${chmodErr}`));
     }
   } else {
-    console.log(chalk.red(`\nwp-cli.phar already exists in the directory: ${wpCliPath}`));
+    console.log(chalk.red(`wp-cli.phar already exists in the directory: ${wpCliPath}`));
   }
 
   // Helper to run WP CLI commands
@@ -71,7 +71,7 @@ export const installWordPress = async (options) => {
       .map((arg) => (arg.includes(' ') ? `"${arg}"` : arg))
       .join(' ');
     const cmd        = `${php} "${wpCliPath}" ${quotedArgs}`;
-    console.log('Running:', cmd);
+    console.log(chalk.cyan('Running:'), cmd);
 
     const {stdout, stderr} = await execAsync(cmd, {
       cwd,
@@ -83,20 +83,14 @@ export const installWordPress = async (options) => {
     console.log(stdout);
   };
 
-
-  console.log(chalk.green("\nDownloading WordPress..."));
   await runWpCli('core download', extractPath);
 
-
-  console.log(chalk.green("\nCreating wp-config.php..."));
   let configCommand = `config create --dbname=${dbName} --dbuser=${dbUser} --dbhost=${dbHost} --dbprefix=${dbPrefix}`;
   if (dbPass) {
     configCommand += ` --dbpass=${dbPass}`;
   }
   await runWpCli(configCommand, extractPath);
 
-
-  console.log(chalk.green("\nInstalling WordPress..."));
   await runWpCli(
     `core install --url=${siteUrl} --title="${siteTitle}" --admin_user=${adminUser} --admin_password=${adminPass} --admin_email=${adminEmail}`,
     extractPath
@@ -113,7 +107,8 @@ export const installWordPress = async (options) => {
 
   await runWpCli('theme delete twentytwentyfive twentytwentyfour twentyseventeen twentynineteen twentytwenty twentytwentyone twentytwentytwo twentytwentythree', extractPath);
 
-  console.log(chalk.green("\nWordPress installation complete."));
+
+  console.log(chalk.green("WordPress installation complete."));
 
 
   try {

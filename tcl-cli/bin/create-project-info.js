@@ -1,7 +1,10 @@
 import fs from 'fs';
 import path from 'path';
+import chalk from "chalk";
 
 export const createProjectInfo = (login, password, email, projectName) => {
+  console.log(chalk.green(`Create project info`));
+
   const name                  = projectName.toLowerCase().replace(/[^a-z0-9]/gi, '_');
   const folderProjectInfoPath = path.resolve('project-info');
   const projectInfoPath       = path.join(folderProjectInfoPath, 'project.nfo');

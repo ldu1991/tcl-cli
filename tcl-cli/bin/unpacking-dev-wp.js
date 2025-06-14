@@ -3,11 +3,12 @@ import fs from 'fs';
 import path from 'path';
 import chalk from 'chalk';
 import {fileURLToPath} from 'url';
+import {createProjectConfig} from "./create-project-config.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname  = path.dirname(__filename);
 
-export const unpackingDevWp = async (theme) => {
+export const unpackingDevWp = async (theme, siteUrl, projectName) => {
   const archivesDir = path.resolve(__dirname, '../archives');
   let archiveName   = '';
   if (theme === 'gutenberg') {
@@ -25,9 +26,11 @@ export const unpackingDevWp = async (theme) => {
 
   fs.mkdirSync(themePath, {recursive: true});
 
-  console.log(chalk.cyan('Extracting dev-wp from local archive...'));
   await fs.createReadStream(archivePath)
     .pipe(unZipper.Extract({path: themePath}))
     .promise();
-  console.log(chalk.green('dev-wp installed successfully from local archive!'));
+
+  console.log(chalk.green(`dev-wp installed successfully from local archive!`));
+
+  await createProjectConfig(siteUrl, projectName);
 }
