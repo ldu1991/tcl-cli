@@ -22,14 +22,12 @@ export const getQuestions = () => [
     name:    'targetDirectory',
     message: 'Enter target directory:',
     default: answers => answers.projectName.toLowerCase().replace(/[^a-z0-9]/gi, '-'),
-    //validate: input => input.trim() ? true : 'Target directory is required.'
   },
   {
     type:    'input',
     name:    'dbName',
     message: 'Enter database name:',
     default: answers => answers.projectName.toLowerCase().replace(/[^a-z0-9]/gi, '-')
-    //validate: input => input.trim() ? true : 'Database name is required.',
   },
   {
     type:    'input',
@@ -65,22 +63,19 @@ export const getQuestions = () => [
     type:    'input',
     name:    'siteTitle',
     message: 'Enter site title:',
-    default: answers => answers.projectName,
-    //validate: input => input.trim() ? true : 'Site title is required.',
+    default: answers => `!!!LOCAL ${answers.projectName}`,
   },
   {
     type:    'input',
     name:    'adminUser',
     message: 'Enter admin user:',
     default: answers => `tcl_${answers.projectName.toLowerCase().replace(/[^a-z0-9]/gi, '_')}_admin`,
-    //validate: input => input.trim() ? true : 'Admin user is required.',
   },
   {
     type:    'input',
     name:    'adminPass',
     message: 'Enter admin password:',
     default: generatePassword()
-    //validate: input => input.trim() ? true : 'Admin password is required.',
   },
   {
     type:     'input',

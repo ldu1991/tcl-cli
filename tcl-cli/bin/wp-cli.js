@@ -105,7 +105,7 @@ export const installWordPress = async (options) => {
   const themeName = projectName.toLowerCase().replace(/[^a-z0-9]/gi, '-');
   await runWpCli(`theme activate ${themeName}`);
 
-  await runWpCli('theme delete twentytwentyfive twentytwentyfour twentyseventeen twentynineteen twentytwenty twentytwentyone twentytwentytwo twentytwentythree', extractPath);
+  await runWpCli('theme delete twentytwentyfour twentyseventeen twentynineteen twentytwenty twentytwentyone twentytwentytwo twentytwentythree', extractPath);
 
 
   console.log(chalk.green("WordPress installation complete."));

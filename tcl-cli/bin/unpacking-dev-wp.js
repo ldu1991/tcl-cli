@@ -4,6 +4,10 @@ import path from 'path';
 import chalk from 'chalk';
 import {fileURLToPath} from 'url';
 import {createProjectConfig} from "./create-project-config.js";
+import {promisify} from "util";
+import {exec} from "child_process";
+
+const execAsync = promisify(exec);
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname  = path.dirname(__filename);
@@ -33,4 +37,14 @@ export const unpackingDevWp = async (theme, siteUrl, projectName) => {
   console.log(chalk.green(`dev-wp installed successfully from local archive!`));
 
   await createProjectConfig(siteUrl, projectName);
+
+  console.log(chalk.cyan('Running:'), `npm install in ${themePath}...`);
+  try {
+    const {stdout, stderr} = await execAsync('npm install', {cwd: themePath});
+    console.log(chalk.green('npm install completed successfully.'));
+    if (stdout) console.log(stdout);
+    if (stderr) console.error(stderr);
+  } catch (error) {
+    console.error(chalk.red('npm install failed:'), error);
+  }
 }
