@@ -71,9 +71,6 @@ function get_section_options(string $general_class = '', array $block = array(),
 
     if (!empty($is_preview)) $result['class'][] = $general_class . '_is-preview';
 
-    $hp_blocks_background = get_field('hp_blocks_background') ?: 'hp-bg-brand-black';
-    $result['class'][]    = $hp_blocks_background;
-
     $result['class'][] = get_prefix() . '-section-element';
 
     return $result;

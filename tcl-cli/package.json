@@ -1,14 +1,12 @@
 {
   "name": "tcl-theme",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "type": "module",
   "bin": {
     "tcl-theme": "./tcl-cli.js"
   },
   "scripts": {
-    "zip:gutenberg": "node zip-gutenberg.js",
-    "zip:flexible": "node zip-flexible.js",
-    "zip": "npm run zip:gutenberg && npm run zip:flexible",
+    "zip": "node zip-gutenberg.js && node zip-flexible.js && node zip-plugins.js",
     "check:publish": "npm pack --dry-run",
     "check-updates": "ncu",
     "upgrade-deps": "ncu -u && npm install"
@@ -21,7 +19,7 @@
     "boxen": "^8.0.1",
     "chalk": "^5.4.1",
     "cli-progress": "^3.12.0",
-    "inquirer": "^12.6.1",
+    "inquirer": "^12.6.3",
     "npm-check-updates": "^18.0.1",
     "unzipper": "^0.12.3"
   }

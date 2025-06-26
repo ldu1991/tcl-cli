@@ -6,6 +6,7 @@ import path from 'path';
 import chalk from "chalk";
 import {downloadTheCookieLabs} from "./download-thecookielabs.js";
 import {createStartTheme} from "./create-start-theme.js";
+import {unpackingPlugins} from "./unpacking-plugins.js";
 
 const execAsync = promisify(exec);
 
@@ -22,7 +23,13 @@ export const installWordPress = async (options) => {
           siteTitle,
           adminUser,
           adminPass,
-          adminEmail
+          adminEmail,
+          pluginsToActivate = [
+            'acf-image-aspect-ratio-crop',
+            'advanced-custom-fields-pro',
+            'safe-svg',
+            'uipress'
+          ]
         } = options;
 
   if (!fs.existsSync(installPath)) {
@@ -98,6 +105,9 @@ export const installWordPress = async (options) => {
 
   await runWpCli('plugin deactivate akismet hello', extractPath);
   await runWpCli('plugin delete akismet hello', extractPath);
+  await unpackingPlugins()
+  await runWpCli(`plugin activate ${pluginsToActivate.join(' ')}`, extractPath);
+
 
   await createStartTheme(projectName);
   await downloadTheCookieLabs();
@@ -107,9 +117,7 @@ export const installWordPress = async (options) => {
 
   await runWpCli('theme delete twentytwentyfour twentyseventeen twentynineteen twentytwenty twentytwentyone twentytwentytwo twentytwentythree', extractPath);
 
-
   console.log(chalk.green("WordPress installation complete."));
-
 
   try {
     if (fs.existsSync(wpCliPath)) {

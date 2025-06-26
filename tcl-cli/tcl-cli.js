@@ -22,6 +22,7 @@ import {getQuestions} from './bin/questions.js';
 import {unpackingDevWp} from "./bin/unpacking-dev-wp.js";
 import {installWordPress} from "./bin/wp-cli.js";
 import {createProjectInfo} from "./bin/create-project-info.js";
+import {removeTrashFiles} from "./bin/remove-trash-files.js";
 
 
 const runCLI = async () => {
@@ -94,6 +95,8 @@ const runCLI = async () => {
         await unpackingDevWp('gutenberg', siteUrl, projectName);
         break;
     }
+
+    await removeTrashFiles();
 
     console.log(boxen(chalk.green('Setup complete!'), {
       padding:     1,
