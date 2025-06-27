@@ -43,9 +43,4 @@ function add_theme_supports()
 
   // Add image sizes.
   //add_image_size('thumbnail-once', 480, 480, true);
-
-  // Editor styles.
-  add_theme_support('editor-styles');
-
-  add_editor_style('assets/css/style-editor.css');
 }

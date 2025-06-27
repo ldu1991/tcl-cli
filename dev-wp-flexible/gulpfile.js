@@ -5,6 +5,7 @@ import {images} from './gulp-tasks/images.js';
 import {browserSyncInit} from './gulp-tasks/browser-sync.js';
 import {watcher} from './gulp-tasks/watch.js';
 import {libScss, libScssRelease} from './gulp-tasks/lib-scss.js';
+import {syncAcfJson} from "./gulp-tasks/sync-acf-json.js";
 
-export const release = series(scssRelease, scssBlocksRelease, libScssRelease, images);
-export default series(scssDev, scssBlocks, libScss, copyFiles, images, parallel(browserSyncInit, watcher));
+export const release = series(scssRelease, scssBlocksRelease, libScssRelease, images, syncAcfJson);
+export default series(scssDev, scssBlocks, libScss, copyFiles, images, syncAcfJson, parallel(browserSyncInit, watcher));

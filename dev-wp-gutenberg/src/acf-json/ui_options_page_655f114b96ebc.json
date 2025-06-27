@@ -12,11 +12,15 @@
     "position": 1,
     "redirect": 0,
     "description": "",
+    "menu_icon": {
+        "type": "dashicons",
+        "value": "dashicons-admin-tools"
+    },
     "update_button": "Update",
     "updated_message": "Options Updated",
     "capability": "edit_posts",
     "data_storage": "options",
     "post_id": "",
     "autoload": 1,
-    "modified": 1700729222
+    "modified": 1751015937
 }

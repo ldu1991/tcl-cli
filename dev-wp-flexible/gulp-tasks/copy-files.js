@@ -11,7 +11,8 @@ export function copyFiles() {
   return src([
     './src/**/*.php',
     './src/**/*.json',
-    '!./src/blocks/__example/**',
+    '!./src/acf-json/*.*',
+    '!./src/blocks/__example/**'
   ], {allowEmpty: true})
     .pipe(dest(projectConfig.themePath));
 }

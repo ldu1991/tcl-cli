@@ -4,11 +4,6 @@ import path from 'path';
 import plumber from 'gulp-plumber';
 import cached from 'gulp-cached';
 import dependents from 'gulp-dependents';
-import debug from 'gulp-debug';
-import chalk from 'chalk';
-import gulpIf from 'gulp-if';
-import insert from 'gulp-insert';
-import {additional_header_classes, style_editor_default} from './theme-data.js';
 import autoprefixer from 'gulp-autoprefixer';
 import sassLib from 'gulp-sass';
 import * as dartSass from 'sass';
@@ -31,20 +26,7 @@ export function scssDev() {
     .pipe(plumber({errorHandler: onError}))
     .pipe(cached('scss'))
     .pipe(dependents())
-    // .pipe(debug({
-    //   title: '', logger: message => {
-    //     console.log(chalk.green.bold('SCSS compiled:') + message);
-    //   },
-    // }))
-    .pipe(gulpIf(
-      file => file.path.endsWith('style.scss'),
-      insert.append(additional_header_classes),
-    ))
     .pipe(sass.sync({loadPaths: ['node_modules']}))
-    .pipe(gulpIf(
-      file => file.path.endsWith('style-editor.scss'),
-      insert.prepend(style_editor_default),
-    ))
     .pipe(autoprefixer())
     .pipe(dest('css', {cwd: projectConfig.themePath, sourcemaps: true}));
 }
@@ -52,15 +34,7 @@ export function scssDev() {
 export function scssRelease() {
   return src('./src/scss/**/*.scss', {allowEmpty: true})
     .pipe(plumber({errorHandler: onError}))
-    .pipe(gulpIf(
-      file => file.path.endsWith('style.scss'),
-      insert.append(additional_header_classes),
-    ))
     .pipe(sass.sync({style: 'compressed', loadPaths: ['node_modules']}))
-    .pipe(gulpIf(
-      file => file.path.endsWith('style-editor.scss'),
-      insert.prepend(style_editor_default),
-    ))
     .pipe(autoprefixer())
     .pipe(dest('css', {cwd: projectConfig.themePath}));
 }
@@ -70,11 +44,6 @@ export function scssBlocks() {
     .pipe(plumber({errorHandler: onError}))
     .pipe(cached('scss'))
     .pipe(dependents())
-    // .pipe(debug({
-    //   title: '', logger: message => {
-    //     console.log(chalk.green.bold('SCSS compiled:') + message);
-    //   },
-    // }))
     .pipe(sass.sync({loadPaths: ['node_modules']}))
     .pipe(autoprefixer())
     .pipe(dest('blocks', {cwd: projectConfig.themePath, sourcemaps: true}));

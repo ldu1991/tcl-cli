@@ -5,7 +5,7 @@
         {
             "key": "field_63d3de6ef19ab",
             "label": "Filed",
-            "name": "filed",
+            "name": "filed_test",
             "aria-label": "",
             "type": "radio",
             "instructions": "",
@@ -28,6 +28,27 @@
             "allow_in_bindings": 1,
             "layout": "horizontal",
             "save_other_choice": 0
+        },
+        {
+            "key": "field_685e85722769a",
+            "label": "aasdERTT",
+            "name": "aasd",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "maxlength": "",
+            "allow_in_bindings": 0,
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
         }
     ],
     "location": [
@@ -48,5 +69,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1742364667
+    "modified": 1751025191
 }

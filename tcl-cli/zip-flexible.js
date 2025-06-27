@@ -34,7 +34,7 @@ archive.pipe(output);
 
 archive.glob('**/*', {
   cwd:    sourceDir,
-  ignore: ['node_modules/**', 'package-lock.json', 'project-config.json'],
+  ignore: ['node_modules/**', 'package-lock.json', 'project-config.json', 'src/style.css'],
   dot:    true
 });
 
