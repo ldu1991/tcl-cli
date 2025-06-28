@@ -1,0 +1,113 @@
+{
+    "key": "group_tcl_page_sections",
+    "title": "Seiten Builder",
+    "fields": [
+        {
+            "key": "field_60a2af07f7db7",
+            "label": "Seiten Module",
+            "name": "page_sections",
+            "type": "flexible_content",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "layouts": {
+                "layout_60a2af1bd5a44": {
+                    "key": "layout_60a2af1bd5a44",
+                    "name": "example",
+                    "label": "Example",
+                    "display": "block",
+                    "sub_fields": [
+                        {
+                            "key": "field_60a2af3ef7db8",
+                            "label": "Eindeutige ID",
+                            "name": "unique_id",
+                            "type": "unique_id",
+                            "instructions": "Sie können diese eindeutige ID benutzen, um einen Ankerlink zu diesem Modul zu erstellen.",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            }
+                        },
+                        {
+                            "key": "field_6227bea58ed53",
+                            "label": "Modulabstand unten",
+                            "name": "bottom_margin",
+                            "type": "button_group",
+                            "instructions": "Exact margin size in pixels depends on theme design",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "choices": {
+                                "none": "keiner",
+                                "small": "klein",
+                                "medium": "mittel",
+                                "large": "groß"
+                            },
+                            "allow_null": 0,
+                            "default_value": "medium",
+                            "layout": "horizontal",
+                            "return_format": "value"
+                        }
+                    ],
+                    "min": "",
+                    "max": ""
+                }
+            },
+            "button_label": "Add Section",
+            "min": "",
+            "max": ""
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "page"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "post"
+            }
+        ],
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "tutorials"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "seamless",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": [
+        "the_content",
+        "excerpt",
+        "discussion",
+        "comments",
+        "revisions",
+        "slug"
+    ],
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1652878832
+}
