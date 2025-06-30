@@ -5,7 +5,9 @@ export const removeTrashFiles = async (targetDir = '.') => {
   const extractPath = path.resolve(targetDir);
 
   const toDelete = [
-    'wp-config-sample.php'
+    'wp-config-sample.php',
+    'readme.html',
+    'license.txt'
   ];
 
   for (const target of toDelete) {

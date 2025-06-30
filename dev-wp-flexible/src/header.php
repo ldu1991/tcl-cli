@@ -10,6 +10,7 @@ if (!defined('ABSPATH')) {
 
 <head>
   <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes">
   <meta charset="<?php bloginfo('charset') ?>">
   <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, shrink-to-fit=no">
 

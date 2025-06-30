@@ -6,6 +6,7 @@ import {fileURLToPath} from 'url';
 import {createProjectConfig} from "./create-project-config.js";
 import {promisify} from "util";
 import {exec} from "child_process";
+import {createGitignore} from "./create-gitignore.js";
 
 const execAsync = promisify(exec);
 
@@ -37,6 +38,8 @@ export const unpackingDevWp = async (theme, siteUrl, projectName) => {
   console.log(chalk.green(`dev-wp installed successfully from local archive!`));
 
   await createProjectConfig(siteUrl, projectName);
+
+  await createGitignore();
 
   console.log(chalk.cyan('Running:'), `npm install in ${themePath}...`);
   try {
