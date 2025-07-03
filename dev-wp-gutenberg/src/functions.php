@@ -10,6 +10,17 @@ if (!defined('ABSPATH')) {
 // get_stylesheet_directory();      D:/OpenServer/domains/site/wp-content/themes/my-CHILD-theme
 // get_stylesheet_directory_uri();  http://site/wp-content/themes/my-CHILD-theme
 
+remove_action('wp_head', 'feed_links', 2);
+remove_action('wp_head', 'feed_links_extra', 3);
+remove_action('wp_head', 'rsd_link');
+
+remove_action('wp_head', 'feed_links', 2);
+remove_action('wp_head', 'feed_links_extra', 3);
+remove_action('wp_head', 'rsd_link');
+remove_action('wp_head', 'wlwmanifest_link');
+remove_action('wp_head', 'wp_generator');
+remove_action('wp_head', 'wp_shortlink_wp_head');
+
 function tcl_get_global_settings()
 {
   $json_path = get_stylesheet_directory() . '/theme.json';

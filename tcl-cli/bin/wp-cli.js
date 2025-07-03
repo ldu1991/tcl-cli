@@ -7,6 +7,7 @@ import chalk from "chalk";
 import {downloadTheCookieLabs} from "./download-thecookielabs.js";
 import {createStartTheme} from "./create-start-theme.js";
 import {unpackingPlugins} from "./unpacking-plugins.js";
+import {createDbBackupFolder} from "./create-db-backup-folder.js";
 
 const execAsync = promisify(exec);
 
@@ -111,6 +112,7 @@ export const installWordPress = async (options) => {
 
   await createStartTheme(projectName);
   await downloadTheCookieLabs();
+  await createDbBackupFolder()
 
   const themeName = projectName.toLowerCase().replace(/[^a-z0-9]/gi, '-');
   await runWpCli(`theme activate ${themeName}`);

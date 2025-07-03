@@ -8,6 +8,13 @@ const __dirname     = path.dirname(__filename);
 const projectConfig = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../project-config.json')).toString());
 
 export function copyFiles() {
+  const fontPath = path.resolve('./src/fonts');
+
+  if (fs.existsSync(fontPath)) {
+    src('./src/fonts/**/*', {allowEmpty: true})
+      .pipe(dest('fonts', {cwd: projectConfig.themePath}))
+  }
+
   return src([
     './src/**/*.php',
     './src/**/*.json',

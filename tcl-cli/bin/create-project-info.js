@@ -28,6 +28,10 @@ ${name}#${new Date().getFullYear()}`;
 
   // Adding index.php
   const index = `<?php
-// Silence is golden.`;
+
+// Do not allow directly accessing this file.
+if (!defined('ABSPATH')) {
+  exit('Direct script access denied.');
+}`;
   fs.writeFileSync(indexPath, index);
 }

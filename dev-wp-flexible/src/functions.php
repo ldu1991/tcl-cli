@@ -20,11 +20,12 @@ remove_action('wp_head', 'rsd_link');
 remove_action('wp_head', 'wlwmanifest_link');
 remove_action('wp_head', 'wp_generator');
 remove_action('wp_head', 'wp_shortlink_wp_head');
-remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10);
 
-wp_dequeue_style('wp-block-library');
-wp_dequeue_style('wp-block-library-theme');
-wp_dequeue_style('wc-block-style');
+add_action('wp_enqueue_scripts', function () {
+  wp_dequeue_style('wp-block-library');
+  wp_dequeue_style('wp-block-library-theme');
+  wp_dequeue_style('wc-block-style');
+});
 
 function get_prefix(): string
 {

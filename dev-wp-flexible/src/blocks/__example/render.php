@@ -1,5 +1,4 @@
 <?php
-tcl_class('', '__NAME__', false);
 $unique_id     = get_sub_field('unique_id') ?: '';
 $bottom_margin = get_sub_field('bottom_margin');
 
@@ -9,7 +8,7 @@ if ($bottom_margin) {
 }
 ?>
 <section id="<?php echo $unique_id; ?>"
-         class="<?php tcl_class($class_modifier) ?>">
+         class="<?php tcl_class($class_modifier, '__NAME__', true) ?>">
   <div class="<?php tcl_class('__wrapper') ?>">
 
   </div>

@@ -9,7 +9,7 @@ export function generatePassword(length = 16, options = {}) {
   const upperChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   const lowerChars = 'abcdefghijklmnopqrstuvwxyz';
   const numberChars = '0123456789';
-  const symbolChars = '!@#$%^_-+=';
+  const symbolChars = '!@#$%';
 
   let allChars = '';
   if (uppercase) allChars += upperChars;

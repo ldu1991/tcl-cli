@@ -12,13 +12,12 @@ if (!function_exists('normalize_classes')) {
 }
 
 /**
- * @param string|string[] $suffix Suffix(es) — an element/modifier or array of such
- * @param string|null $base_class Base class (installation only)
- * @param bool $echo              Whether to output immediately (true) or return as a string (false)
- *
+ * @param array|string $suffix
+ * @param string|null $base_class
+ * @param bool $include_main_class
  * @return string|null
  */
-function tcl_class(array|string $suffix = '', string $base_class = null, bool $echo = true): ?string
+function tcl_class(array|string $suffix = '', string $base_class = null, bool $include_main_class = false): ?string
 {
   static $main_class = '';
 
@@ -33,18 +32,12 @@ function tcl_class(array|string $suffix = '', string $base_class = null, bool $e
   if ($suffix === '') {
     $result = $main_class;
   } elseif (is_array($suffix)) {
-    $result = implode(' ', array_map(
-      fn($item) => $main_class . $item,
-      $suffix
-    ));
+    $modifiers = array_map(fn($item) => $main_class . $item, $suffix);
+    $result    = ($include_main_class ? $main_class . ' ' : '') . implode(' ', $modifiers);
   } else {
-    $result = $main_class . $suffix;
+    $result = ($include_main_class ? $main_class . ' ' : '') . $main_class . $suffix;
   }
 
-  if ($echo) {
-    echo esc_attr($result);
-    return null;
-  }
-
-  return esc_attr($result);
+  echo esc_attr($result);
+  return null;
 }
