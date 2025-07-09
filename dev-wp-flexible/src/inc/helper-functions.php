@@ -29,13 +29,20 @@ function tcl_class(array|string $suffix = '', string $base_class = null, bool $i
     return null;
   }
 
+  $needs_main_prefix = function ($value) {
+    return preg_match('/^(_{1,2}|-{1,2})/', $value);
+  };
+
   if ($suffix === '') {
     $result = $main_class;
   } elseif (is_array($suffix)) {
-    $modifiers = array_map(fn($item) => $main_class . $item, $suffix);
-    $result    = ($include_main_class ? $main_class . ' ' : '') . implode(' ', $modifiers);
+    $modifiers = array_map(function ($item) use ($main_class, $needs_main_prefix) {
+      return $needs_main_prefix($item) ? $main_class . $item : $item;
+    }, $suffix);
+    $result = ($include_main_class ? $main_class . ' ' : '') . implode(' ', $modifiers);
   } else {
-    $result = ($include_main_class ? $main_class . ' ' : '') . $main_class . $suffix;
+    $result = ($include_main_class ? $main_class . ' ' : '') .
+      ($needs_main_prefix($suffix) ? $main_class . $suffix : $suffix);
   }
 
   echo esc_attr($result);

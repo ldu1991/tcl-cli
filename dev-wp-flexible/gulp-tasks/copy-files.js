@@ -1,4 +1,5 @@
 import {src, dest} from 'gulp';
+import cached from 'gulp-cached';
 import {fileURLToPath} from 'url';
 import path from 'path';
 import fs from 'fs';
@@ -12,6 +13,7 @@ export function copyFiles() {
 
   if (fs.existsSync(fontPath)) {
     src('./src/fonts/**/*', {allowEmpty: true})
+      .pipe(cached('fonts'))
       .pipe(dest('fonts', {cwd: projectConfig.themePath}))
   }
 
@@ -21,5 +23,6 @@ export function copyFiles() {
     '!./src/acf-json/*.*',
     '!./src/blocks/__example/**'
   ], {allowEmpty: true})
+    .pipe(cached('php-json'))
     .pipe(dest(projectConfig.themePath));
 }
