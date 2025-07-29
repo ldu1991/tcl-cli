@@ -15,7 +15,7 @@ const __dirname     = path.dirname(__filename);
 const projectConfig = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../project-config.json')).toString());
 
 export function watcher(cb) {
-  watch('./**/*', series(updateCss))
+  watch('./src/**/*', series(updateCss))
   watch('./src/theme.json', series(scssDev));
   watch('./src/scss/**/*.scss', series(scssDev))
     .on('unlink', filepath => {

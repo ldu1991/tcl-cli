@@ -17,7 +17,7 @@ export function browserSyncInit(cb) {
     port:   9000,
   });
 
-  watch(['**/*.{php,css,js,json}'], {cwd: projectConfig.themePath})
+  watch(['**/*.{php,css,js,json}', '!style.css'], {cwd: projectConfig.themePath})
     .on('change', function(path, stats) {
       browserSync.reload();
     });
