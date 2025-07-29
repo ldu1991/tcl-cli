@@ -85,3 +85,25 @@ export function scssBlocksRelease(cb) {
 
   cb();
 }
+
+export function scssComponents(cb) {
+  src(['./src/components/**/*.scss', '!./src/components/__example/**'], {allowEmpty: true, sourcemaps: true})
+    .pipe(plumber({errorHandler: onError}))
+    .pipe(cached('scss'))
+    .pipe(dependents())
+    .pipe(sass.sync({loadPaths: ['node_modules']}))
+    .pipe(autoprefixer())
+    .pipe(dest('components', {cwd: projectConfig.themePath, sourcemaps: true}));
+
+  cb();
+}
+
+export function scssComponentsRelease(cb) {
+  src(['./src/components/**/*.scss', '!./src/components/__example/**'], {allowEmpty: true})
+    .pipe(plumber({errorHandler: onError}))
+    .pipe(sass.sync({style: 'compressed', loadPaths: ['node_modules']}))
+    .pipe(autoprefixer())
+    .pipe(dest('components', {cwd: projectConfig.themePath}));
+
+  cb();
+}

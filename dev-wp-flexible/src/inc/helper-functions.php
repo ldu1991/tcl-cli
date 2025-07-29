@@ -70,40 +70,49 @@ function tcl_get_template_part_return($slug, $name = null, array $args = array()
  */
 function tcl_add_component(string $component = '', array $args = array(), bool $return = false)
 {
+  if (empty($component)) return null;
+
   $componentDir = get_stylesheet_directory() . '/components/' . $component . '/';
-  if (is_dir($componentDir)) {
-    $renderFile = $componentDir . 'render.php';
-    if (file_exists($renderFile)) {
-      $uri_base = get_stylesheet_directory_uri() . '/components/' . $component . '/';
-      // style.css
-      $style_file = $componentDir . 'style.css';
-      if (file_exists($style_file)) {
-        wp_enqueue_style(
-          $component . '-component',
-          $uri_base . 'style.css',
-          array(),
-          wp_get_theme()->get('Version')
-        );
-      }
+  if (!is_dir($componentDir)) return null;
 
-      // script.js
-      $script_file = $componentDir . 'script.js';
-      if (file_exists($script_file)) {
-        wp_enqueue_script(
-          $component . '-component',
-          $uri_base . 'script.js',
-          array(),
-          wp_get_theme()->get('Version'),
-          array('in_footer' => true)
-        );
-      }
+  $renderFile = $componentDir . 'render.php';
+  if (!file_exists($renderFile)) return null;
 
-      if ($return) {
-        return tcl_get_template_part_return('components/' . $component . '/render', null, $args);
-      } else {
-        get_template_part('components/' . $component . '/render', null, $args);
-      }
+  $uri_base = get_stylesheet_directory_uri() . '/components/' . $component . '/';
+  $version = wp_get_theme()->get('Version');
+
+  $enqueue_assets = function() use ($component, $uri_base, $version, $componentDir) {
+    $style_file = $componentDir . 'style.css';
+    $script_file = $componentDir . 'script.js';
+
+    if (file_exists($style_file)) {
+      wp_enqueue_style(
+        $component . '-component',
+        $uri_base . 'style.css',
+        array(),
+        $version
+      );
     }
+
+    if (file_exists($script_file)) {
+      wp_enqueue_script(
+        $component . '-component',
+        $uri_base . 'script.js',
+        array(),
+        $version,
+        array('in_footer' => true)
+      );
+    }
+  };
+
+  if (!is_admin()) {
+    $enqueue_assets();
+  }
+
+  if ($return) {
+    return tcl_get_template_part_return('components/' . $component . '/render', null, $args);
+  } else {
+    get_template_part('components/' . $component . '/render', null, $args);
   }
 
   return null;

@@ -44,7 +44,7 @@
       "heading": true
     },
     "custom": {
-      "prefix": "DEMO"
+      "prefix": "tcl"
     },
     "layout": {
       "contentSize": "min(100% - clamp(1.875rem, 1.875rem + ((1vw - 0.3rem) * 33.2031), 12.5rem), 800px)",
