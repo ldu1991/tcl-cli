@@ -2,7 +2,7 @@ import path from 'path';
 import fs from 'fs';
 import {fileURLToPath} from 'url';
 import {watch, series} from 'gulp';
-import {scssBlocks, scssDev} from './scss.js';
+import {scssBlocks, scssComponents, scssDev} from './scss.js';
 import cached from 'gulp-cached';
 import {copyFiles} from './copy-files.js';
 import {images} from './images.js';
@@ -22,6 +22,10 @@ export function watcher(cb) {
       delete cached.caches.scss[filepath];
     });
   watch('./src/blocks/**/*.scss', series(scssBlocks))
+    .on('unlink', filepath => {
+      delete cached.caches.scss[filepath];
+    });
+  watch('./src/components/**/*.scss', series(scssComponents))
     .on('unlink', filepath => {
       delete cached.caches.scss[filepath];
     });

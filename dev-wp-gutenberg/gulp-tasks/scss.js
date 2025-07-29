@@ -26,16 +26,11 @@ const onError = err => {
 };
 
 /* CSS */
-export function scssDev() {
-  return src('./src/scss/**/*.scss', {allowEmpty: true, sourcemaps: true})
+export function scssDev(cb) {
+  src('./src/scss/**/*.scss', {allowEmpty: true, sourcemaps: true})
     .pipe(plumber({errorHandler: onError}))
     .pipe(cached('scss'))
     .pipe(dependents())
-    // .pipe(debug({
-    //   title: '', logger: message => {
-    //     console.log(chalk.green.bold('SCSS compiled:') + message);
-    //   },
-    // }))
     .pipe(gulpIf(
       file => file.path.endsWith('style.scss'),
       insert.append(additional_header_classes),
@@ -47,10 +42,12 @@ export function scssDev() {
     ))
     .pipe(autoprefixer())
     .pipe(dest('css', {cwd: projectConfig.themePath, sourcemaps: true}));
+
+  cb();
 }
 
-export function scssRelease() {
-  return src('./src/scss/**/*.scss', {allowEmpty: true})
+export function scssRelease(cb) {
+  src('./src/scss/**/*.scss', {allowEmpty: true})
     .pipe(plumber({errorHandler: onError}))
     .pipe(gulpIf(
       file => file.path.endsWith('style.scss'),
@@ -63,27 +60,28 @@ export function scssRelease() {
     ))
     .pipe(autoprefixer())
     .pipe(dest('css', {cwd: projectConfig.themePath}));
+
+  cb();
 }
 
-export function scssBlocks() {
-  return src(['./src/blocks/**/*.scss', '!./src/blocks/__example/**'], {allowEmpty: true, sourcemaps: true})
+export function scssBlocks(cb) {
+  src(['./src/blocks/**/*.scss', '!./src/blocks/__example/**'], {allowEmpty: true, sourcemaps: true})
     .pipe(plumber({errorHandler: onError}))
     .pipe(cached('scss'))
     .pipe(dependents())
-    // .pipe(debug({
-    //   title: '', logger: message => {
-    //     console.log(chalk.green.bold('SCSS compiled:') + message);
-    //   },
-    // }))
     .pipe(sass.sync({loadPaths: ['node_modules']}))
     .pipe(autoprefixer())
     .pipe(dest('blocks', {cwd: projectConfig.themePath, sourcemaps: true}));
+
+  cb();
 }
 
-export function scssBlocksRelease() {
-  return src(['./src/blocks/**/*.scss', '!./src/blocks/__example/**'], {allowEmpty: true})
+export function scssBlocksRelease(cb) {
+  src(['./src/blocks/**/*.scss', '!./src/blocks/__example/**'], {allowEmpty: true})
     .pipe(plumber({errorHandler: onError}))
     .pipe(sass.sync({style: 'compressed', loadPaths: ['node_modules']}))
     .pipe(autoprefixer())
     .pipe(dest('blocks', {cwd: projectConfig.themePath}));
+
+  cb();
 }

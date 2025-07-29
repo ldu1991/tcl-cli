@@ -22,7 +22,7 @@ const onError = err => {
   console.error(err.message);
 };
 
-export function libScss() {
+export function libScss(cb) {
   const scssStream = src('./src/lib/**/*.scss', {allowEmpty: true, sourcemaps: true})
     .pipe(plumber({errorHandler: onError}))
     .pipe(cached('scss'))
@@ -38,11 +38,13 @@ export function libScss() {
     .pipe(dependents())
     .pipe(dest('lib', {cwd: projectConfig.themePath}));
 
-  return merge2(scssStream, cssStream);
+  merge2(scssStream, cssStream);
+
+  cb();
 }
 
 
-export function libScssRelease() {
+export function libScssRelease(cb) {
   const scssStream = src('./src/lib/**/*.scss', {allowEmpty: true})
     .pipe(plumber({errorHandler: onError}))
     .pipe(sass.sync({style: 'compressed', loadPaths: ['node_modules']}))
@@ -54,5 +56,7 @@ export function libScssRelease() {
     .pipe(plumber({errorHandler: onError}))
     .pipe(dest('lib', {cwd: projectConfig.themePath}));
 
-  return merge2(scssStream, cssStream);
+  merge2(scssStream, cssStream);
+
+  cb();
 }

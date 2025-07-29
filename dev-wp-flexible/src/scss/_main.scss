@@ -17,24 +17,3 @@ button:not(.hp-btn) {
     outline-offset: 8px;
   }
 }
-
-.main-wrapper {
-  > *:not([class*='-section-element']) {
-    &:not(.alignwide):not(.alignfull) {
-      max-width: var(--wp--style--global--content-size);
-    }
-
-    &:not(.alignfull) {
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    &.alignwide {
-      max-width: var(--wp--style--global--wide-size);
-    }
-
-    &.alignfull {
-      max-width: none;
-    }
-  }
-}

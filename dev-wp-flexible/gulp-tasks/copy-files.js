@@ -9,7 +9,7 @@ const __filename    = fileURLToPath(import.meta.url);
 const __dirname     = path.dirname(__filename);
 const projectConfig = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../project-config.json')).toString());
 
-export function copyFiles() {
+export function copyFiles(cb) {
   const fontPath = path.resolve('./src/fonts');
 
   if (fs.existsSync(fontPath)) {
@@ -20,7 +20,7 @@ export function copyFiles() {
       .pipe(dest('fonts', {cwd: projectConfig.themePath}))
   }
 
-  return src([
+  src([
     './src/**/*.php',
     './src/**/*.json',
     '!./src/acf-json/*.*',
@@ -29,4 +29,6 @@ export function copyFiles() {
     .pipe(newer(projectConfig.themePath))
     .pipe(cached('php-json'))
     .pipe(dest(projectConfig.themePath));
+
+  cb();
 }

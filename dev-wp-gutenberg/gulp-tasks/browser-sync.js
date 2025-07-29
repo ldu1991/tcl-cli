@@ -21,5 +21,6 @@ export function browserSyncInit(cb) {
     .on('change', function(path, stats) {
       browserSync.reload();
     });
+
   cb();
 }
