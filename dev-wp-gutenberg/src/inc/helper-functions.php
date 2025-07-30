@@ -247,17 +247,14 @@ function tcl_add_component(string $component = '', array $args = array(), bool $
 
   if (!is_admin()) {
     $enqueue_assets();
+  } elseif (is_admin()) {
+    if (file_exists($componentDir . 'style.css') || file_exists($componentDir . 'script.js')) {
+      add_action('enqueue_block_editor_assets', $enqueue_assets);
+    }
   }
 
-  if (file_exists($componentDir . 'style.css') || file_exists($componentDir . 'script.js')) {
-    add_action('enqueue_block_editor_assets', $enqueue_assets);
-  }
-
-  if ($return) {
-    return tcl_get_template_part_return('components/' . $component . '/render', null, $args);
-  } else {
-    get_template_part('components/' . $component . '/render', null, $args);
-  }
-
-  return null;
+  $template_path = 'components/' . $component . '/render';
+  return $return
+    ? tcl_get_template_part_return($template_path, null, $args)
+    : get_template_part($template_path, null, $args);
 }
